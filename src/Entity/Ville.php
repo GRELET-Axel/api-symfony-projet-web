@@ -9,11 +9,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VilleRepository::class)]
-#[ApiResource(
-    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'ville:list']]],
-    itemOperations: ['get' => ['normalization_context' => ['groups' => 'ville:item']]],
-    paginationEnabled: false
-)]
+#[ApiResource]
 class Ville
 {
     #[ORM\Id]

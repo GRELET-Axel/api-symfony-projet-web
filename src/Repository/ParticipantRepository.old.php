@@ -16,9 +16,23 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ParticipantRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Participant::class);
+    }
+
+    public function loadUserByIdentifier(string $userMail): ?Participant
+    {
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+                'SELECT u
+                FROM App\Entity\Participant u
+                WHERE u.mail = :query'
+            )
+            ->setParameter('query', $userMail)
+            ->getOneOrNullResult();
     }
 
     public function save(Participant $entity, bool $flush = false): void
