@@ -7,31 +7,46 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
+// #[ApiResource(collectionOperations: ['get' => ['normalization_context' => ['groups' => 'sortie:list']]],
+//     itemOperations: ['get' => ['normalization_context' => ['groups' => 'sortie:item']]],
+//     paginationEnabled: false,)]
+#[ApiResource()]
+
 class Sortie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['sortie:list', 'sortie:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sortie:list', 'sortie:item'])]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['sortie:list', 'sortie:item'])]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sortie:list', 'sortie:item'])]
     private ?string $duree = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['sortie:list', 'sortie:item'])]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Groups(['sortie:list', 'sortie:item'])]
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['sortie:list', 'sortie:item'])]
     private ?string $infosSortie = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
