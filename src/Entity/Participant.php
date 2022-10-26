@@ -32,13 +32,13 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\Column(length: 150, unique: true)]
-    private ?string $mail = null;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $motPasse = null;
+    private ?string $password = null;
 
     #[ORM\Column]
     private ?bool $administrateur = null;
@@ -90,6 +90,11 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getUsername(): string
+    {
+        return $this->email;
+    }
+
     /**
      * The public representation of the user (e.g. a username, an email address, etc.)
      *
@@ -97,7 +102,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     */
     public function getUserIdentifier(): string
     {
-        return (string) $this->mail;
+        return (string) $this->email;
     }
 
     /**
@@ -121,12 +126,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return $this->motPasse;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
     {
-        $this->motPasse = $password;
+        $this->password = $password;
 
         return $this;
     }
@@ -172,26 +177,17 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMail(): ?string
+
+    public function getEmail(): ?string
     {
-        return $this->mail;
+        return $this->email;
     }
 
-    public function setMail(string $mail): self
-    {
-        $this->mail = $mail;
 
-        return $this;
-    }
 
-    public function getMotPasse(): ?string
+    public function setEmail(string $mail): self
     {
-        return $this->motPasse;
-    }
-
-    public function setMotPasse(string $motPasse): self
-    {
-        $this->motPasse = $motPasse;
+        $this->email = $mail;
 
         return $this;
     }

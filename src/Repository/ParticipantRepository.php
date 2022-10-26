@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @extends ServiceEntityRepository<Participant>
@@ -14,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Participant[]    findAll()
  * @method Participant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipantRepository extends ServiceEntityRepository
+class ParticipantRepository extends ServiceEntityRepository implements UserLoaderInterface
 {
 
     public function __construct(ManagerRegistry $registry)
