@@ -28,21 +28,15 @@ security:
         api:
             pattern:   ^/api
             stateless: true
-            jwt: ~     
-               
+            provider: app_user_provider
+            jwt: ~        
         # main:
-        #     stateless: true
-        #     provider: app_user_provider
         #     json_login:
         #         check_path: /authentication_token
-        #         username_path: mail
-        #         password_path: motPasse
+        #         username_path: email
+        #         password_path: password
         #         success_handler: lexik_jwt_authentication.handler.authentication_success
         #         failure_handler: lexik_jwt_authentication.handler.authentication_failure
-        #     jwt: ~
-            # stateless: true
-            # provider: app_user_provider
-            # custom_authenticator: App\Security\ParticipantAuthenticator
 
 
       
@@ -56,7 +50,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
-    # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
 # when@test:
 #     security:
