@@ -69,13 +69,16 @@ class ParticipantRepository extends ServiceEntityRepository implements UserLoade
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Participant
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneByMail($value): string
+   {
+    $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+                'SELECT u.id
+                FROM App\Entity\Participant u
+                WHERE u.mail = :query'
+            )
+            ->setParameter('query', $value)
+            ->getOneOrNullResult();
+   }
 }
