@@ -62,6 +62,7 @@ class Sortie
     private ?Participant $participant = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\JoinColumn(onDelete:"CASCADE")]
     private ?Lieu $lieu = null;
 
     public function __construct()
