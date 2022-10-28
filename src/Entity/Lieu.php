@@ -35,6 +35,7 @@ class Lieu
     private Collection $sorties;
 
     #[ORM\ManyToOne(inversedBy: 'lieux')]
+    #[ORM\JoinColumn(onDelete:"CASCADE")]
     private ?Ville $ville = null;
 
 

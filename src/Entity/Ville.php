@@ -31,6 +31,7 @@ class Ville
     private ?int $codePostal = null;
 
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class)]
+    #[ORM\JoinColumn(onDelete:"CASCADE")]
     private Collection $lieux;
 
     public function getId(): ?int
