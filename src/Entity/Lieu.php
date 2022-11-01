@@ -18,6 +18,7 @@ class Lieu
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['sortie'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
