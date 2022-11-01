@@ -7,10 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\Link;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 #[ApiResource()]
@@ -20,6 +21,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['sortie'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
@@ -32,6 +34,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\Column(length: 150, unique: true)]
+    #[Groups(['sortie'])]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
@@ -46,7 +49,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
 
-    #[ORM\ManyToOne(inversedBy: 'participants')]
+    #[ORM\ManyToOne(targetEntity: Sortie::class, inversedBy: 'campus')]
     private ?Campus $campus = null;
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'participants')]

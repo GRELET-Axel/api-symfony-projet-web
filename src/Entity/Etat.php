@@ -7,11 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
-
+use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EtatRepository::class)]
-#[ApiResource()]
-
+#[ApiResource]
 class Etat
 {
     #[ORM\Id]
@@ -20,9 +22,11 @@ class Etat
     private ?int $id = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['sortie'])]
     private ?string $libelle = null;
 
     #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class)]
+    // #[Link(toProperty: 'etat')]
     private Collection $sorties;
 
     public function __construct()

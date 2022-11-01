@@ -7,7 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
-
+use ApiPlatform\Metadata\Link;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampusRepository::class)]
 #[ApiResource()]
@@ -19,9 +20,11 @@ class Campus
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sortie'])]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Sortie::class)]
+    #[Link(toProperty: 'campus')]
     private Collection $sorties;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Participant::class)]

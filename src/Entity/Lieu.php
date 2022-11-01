@@ -7,7 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
-
+use ApiPlatform\Metadata\Link;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 #[ApiResource()]
@@ -20,6 +21,7 @@ class Lieu
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['sortie'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 200)]

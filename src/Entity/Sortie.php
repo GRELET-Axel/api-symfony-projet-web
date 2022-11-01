@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Get;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
@@ -15,54 +19,61 @@ use Symfony\Component\Serializer\Annotation\Groups;
 // #[ApiResource(collectionOperations: ['get' => ['normalization_context' => ['groups' => 'sortie:list']]],
 //     itemOperations: ['get' => ['normalization_context' => ['groups' => 'sortie:item']]],
 //     paginationEnabled: false,)]
-#[ApiResource()]
+// #[ApiResource(normalizationContext: ['jsonld_embed_context' => true])]
+#[ApiResource(normalizationContext: ["groups"=>"sortie"])]
+
 
 class Sortie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['sortie:list', 'sortie:item'])]
+    #[Groups(['sortie'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['sortie:list', 'sortie:item'])]
+    #[Groups(['sortie'])]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['sortie:list', 'sortie:item'])]
+    #[Groups(['sortie'])]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['sortie:list', 'sortie:item'])]
+    #[Groups(['sortie'])]
     private ?string $duree = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Groups(['sortie:list', 'sortie:item'])]
+    #[Groups(['sortie'])]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
-    #[Groups(['sortie:list', 'sortie:item'])]
+    #[Groups(['sortie'])]
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['sortie:list', 'sortie:item'])]
+    #[Groups(['sortie'])]
     private ?string $infosSortie = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\ManyToOne(targetEntity: Etat::class,inversedBy: 'sorties')]
+    #[Groups(['sortie'])]
     private ?Etat $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\ManyToOne(targetEntity: Campus::class,inversedBy: 'sorties')]
+    #[Groups(['sortie'])]
     private ?Campus $campus = null;
 
     #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'inscrit')]
+    #[Groups(['sortie'])]
     private Collection $participants;
 
-    #[ORM\ManyToOne(inversedBy: 'organisateur')]
+    #[ORM\ManyToOne(targetEntity: Participant::class,inversedBy: 'organisateur')]
+    #[Groups(['sortie'])]
     private ?Participant $participant = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\ManyToOne(targetEntity: Lieu::class,inversedBy: 'sorties')]
     #[ORM\JoinColumn(onDelete: "SET NULL")]
+    #[Groups(['sortie'])]
     private ?Lieu $lieu = null;
 
     public function __construct()
