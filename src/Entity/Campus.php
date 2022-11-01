@@ -11,7 +11,7 @@ use ApiPlatform\Metadata\Link;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampusRepository::class)]
-#[ApiResource()]
+#[ApiResource]
 class Campus
 {
     #[ORM\Id]
@@ -25,7 +25,6 @@ class Campus
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Sortie::class)]
-    #[Link(toProperty: 'campus')]
     private Collection $sorties;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Participant::class)]

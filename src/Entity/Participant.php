@@ -25,9 +25,11 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['sortie'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['sortie'])]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15)]
@@ -49,7 +51,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
 
-    #[ORM\ManyToOne(targetEntity: Sortie::class, inversedBy: 'campus')]
+    #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'campus')]
     private ?Campus $campus = null;
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'participants')]
