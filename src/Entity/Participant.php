@@ -14,29 +14,29 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
-#[ApiResource()]
+#[ApiResource(normalizationContext: ["groups"=>"user"])]
 
 class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['sortie'])]
+    #[Groups(['sortie','user'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['sortie'])]
+    #[Groups(['sortie','user'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['sortie'])]
+    #[Groups(['sortie','user'])]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15)]
     private ?string $telephone = null;
 
     #[ORM\Column(length: 150, unique: true)]
-    #[Groups(['sortie'])]
+    #[Groups(['sortie','user'])]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
@@ -55,6 +55,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Campus $campus = null;
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'participants')]
+    #[Groups(['user'])]
     private Collection $inscrit;
 
     #[ORM\OneToMany(mappedBy: 'participant', targetEntity: Sortie::class)]

@@ -28,11 +28,11 @@ class Sortie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['sortie'])]
+    #[Groups(['sortie','user'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['sortie'])]
+    #[Groups(['sortie','user'])]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
